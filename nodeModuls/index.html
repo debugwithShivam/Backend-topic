@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xander | Sun Collection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav ul li {
+            cursor: pointer;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav ul li:hover {
+            color: #f5576c;
+        }
+
+        nav ul li::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            transition: width 0.3s;
+        }
+
+        nav ul li:hover::after {
+            width: 100%;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            padding: 0.8rem 1.2rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            width: 200px;
+            outline: none;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .search-box input:focus {
+            border-color: #f5576c;
+            width: 250px;
+            box-shadow: 0 0 15px rgba(245, 87, 108, 0.2);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 5%;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        /* Product Section */
+        .product-section {
+            background: white;
+            border-radius: 30px;
+            padding: 3rem;
+            margin-top: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '☀️';
+            position: absolute;
+            right: -50px;
+            top: 0;
+            animation: rotate 10s linear infinite;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .product-image {
+            position: relative;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-radius: 20px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(253, 203, 110, 0.4);
+        }
+
+        .sun-icon {
+            font-size: 200px;
+            animation: pulse 2s ease-in-out infinite;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+        }
+
+        .product-details {
+            padding: 1rem;
+        }
+
+        .product-tag {
+            display: inline-block;
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-name {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #2d3436;
+        }
+
+        .product-price {
+            font-size: 2rem;
+            color: #e17055;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-description {
+            color: #636e72;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .features li {
+            padding: 0.5rem 0;
+            color: #2d3436;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .features li::before {
+            content: '✓';
+            color: #00b894;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #f5576c;
+            border: 2px solid #f5576c;
+        }
+
+        .btn-secondary:hover {
+            background: #f5576c;
+            color: white;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1.5rem;
+            }
+
+            .product-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        a{
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="logo">Xander</nav>
+        <nav>
+            <ul>
+                <li>
+                    <a href="/">Home</a></li>
+                <li>About</li>
+                <li>Shop</li>
+                <li>Contact</li>
+            </ul>
+        </nav>
+        <nav class="search-box">
+            <input type="text" placeholder="Search products...">
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Welcome to Xander</h1>
+            <p>Discover our exclusive Sun Collection - Brighten your day with style</p>
+        </section>
+
+        <section class="product-section">
+            <h2 class="section-title">Featured Product</h2>
+            
+            <div class="product-container">
+                <div class="product-image">
+                    <div class="sun-icon">☀️</div>
+                </div>
+                
+                <div class="product-details">
+                    <span class="product-tag">New Arrival</span>
+                    <h3 class="product-name">Radiant Sun Lamp</h3>
+                    <p class="product-price">$89.99</p>
+                    <p class="product-description">
+                        Bring warmth and positivity into your space with our signature Radiant Sun Lamp. 
+                        Designed to mimic natural sunlight, this artistic piece creates a golden hour glow 
+                        at any time of day. Perfect for meditation spaces, reading nooks, or as a statement 
+                        piece in your living room.
+                    </p>
+                    <ul class="features">
+                        <li>Adjustable brightness levels</li>
+                        <li>Warm 2700K color temperature</li>
+                        <li>Energy-efficient LED technology</li>
+                        <li>Touch-sensitive controls</li>
+                        <li>2-year warranty included</li>
+                    </ul>
+                    <div class="cta-buttons">
+                        <button class="btn btn-primary">Add to Cart</button>
+                        <button class="btn btn-secondary">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
