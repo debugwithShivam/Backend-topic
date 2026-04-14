@@ -10,19 +10,12 @@ function processfun(req, res) {
         // console.log(process)
         console.log(process.env.PORT)
         res.setHeader('Content-type', 'text/html')
-        if (!argv) {
-            console.log('Please provide a command')
-            process.exit(0)
-        } else {
-            res.write(`
-            <h2>process.argv is ${argv}</h2>
-            `)
-        }
         res.write(`
             <div>
             <h2>.env file Data: ${process.env.PORT}</h2>
             <h2>Where Node is running from :${process.cwd()}</h2>
             <h2>Unique process ID (given by OS) :${process.pid}</h2>
+            <h2>process.argv is ${argv || 'Please provide a command'}</h2>
             <h2>Shows RAM usage :${JSON.stringify(process.memoryUsage())}</h2>
             <h2>How long process is running :${process.uptime()}</h2>
             <h2>Node version :${process.version}</h2>
