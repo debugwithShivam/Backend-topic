@@ -8,7 +8,6 @@ console.log(req.url)
 
   const pathName = myUrl.pathname
   const pathParts = pathName.split('/');
-  console.log(pathName)
 
   if (pathName === '/favicon.ico') {
     res.end();

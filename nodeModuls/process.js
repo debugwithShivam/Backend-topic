@@ -22,7 +22,7 @@ function processfun(req, res) {
             <h2>Platform (OS) :${process.platform}</h2>
             <h2>Architecture (OS) :${process.arch}</h2>
             </div>
-            `)
+            `) 
         res.end()
     }
 }
