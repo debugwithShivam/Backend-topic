@@ -5,8 +5,11 @@ const pathModulsFunction = require('./pathModuls')
 const odModuls = require('./OsModuls')
 const queryParms = require('./url')
 const processFun = require('./process')
+const processStream = require('./processStream')
+const stream = require('./stream')
 // const { url } = require('inspector')
 const url = require('url')
+const net = require('net')
 
 dotenv.config()
 
@@ -14,20 +17,23 @@ dotenv.config()
 // let server = http.createServer(pathModulsFunction)
 // let server = http.createServer(queryParms)
 // let server = http.createServer(processFun)
-let server = http.createServer((req,res)=>{
-  const parsedUrl = url.parse(req.url,true)
-  const pathName = parsedUrl.pathname
-  if(req.url == '/'){
-    res.setHeader('Content-Type','text/html')
-    res.write('<h2>Hello World</h2>')
-    res.end()
-  }else if(req.url == '/home'){
-    res.setHeader('Content-Type','text/html')
-    res.write('<h2>Welcome to Home Page</h2>')
-    res.end()
+// let server = http.createServer(processStream)
+// let server = http.createServer(stream)
 
-  }
-})
+const server = net.createServer((socket) => {
+  console.log("Client connected");
+
+  socket.on('data', (data) => {
+    const msg = data.toString().trim();
+    console.log("Received:", msg);
+
+    socket.write("Server says: " + msg + "\n");
+  });
+
+  socket.on('end', () => {
+    console.log("Client disconnected");
+  });
+});
 
 server.listen(process.env.PORT, () => {
   console.log(`Server running at http://localhost:${process.env.PORT}`)

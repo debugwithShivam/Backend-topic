@@ -311,3 +311,134 @@ process.on('uncaughtException', (err) => {
 });
 
 👉 Prevents crash (use carefully)
+
+
+
+| Stream   | Kaam                  |
+| -------- | --------------------- |
+| `stdin`  | input lena            |
+| `stdout` | normal output dikhana |
+| `stderr` | error dikhana         |
+
+
+🔥 rl.question() vs rl.on('line')
+🔹 1. rl.question() — one-time input (prompt-based)
+rl.question("Naam kya hai? ", (answer) => {
+  console.log(answer);
+});
+👉 Behavior:
+Prompt show karega
+Ek baar input lega
+Callback run karega
+Automatically line listener hata deta hai
+
+🔹 2. rl.on('line') — continuous input listener
+rl.on("line", (input) => {
+  console.log("Tumne likha:", input);
+});
+👉 Behavior:
+Har baar user Enter dabayega → run hoga
+Continuous loop jaisa kaam karega
+Tab tak chalta rahega jab tak rl.close() na karo
+
+
+
+rl.on("line", ...)
+
+vs
+
+process.stdin.on("data", ...)
+
+👉 Ye same cheez nahi hain, bas dono input le rahe hain — level alag hai.
+
+🔥 Core Difference (seedha samajh)
+चीज	data	line
+Level	Low-level	High-level
+Source	stdin stream	readline wrapper
+Trigger	Jab bhi chunk aaye	Jab Enter press ho
+Data type	Raw buffer/string	Clean line
+🔹 1. process.stdin.on('data') — RAW INPUT
+process.stdin.on("data", (chunk) => {
+  console.log(chunk);
+});
+
+👉 Kya hota hai:
+
+Har input chunk mein aata hai
+Enter press bhi part hota hai (\n)
+Kabhi kabhi ek input → multiple chunks
+Example:
+
+User type kare:
+
+hello
+
+👉 Tumhe mil sakta hai:
+
+"hello\n"
+🔹 2. rl.on('line') — CLEAN INPUT
+rl.on("line", (input) => {
+  console.log(input);
+});
+
+👉 Kya hota hai:
+
+Tab fire hota hai jab user Enter dabata hai
+\n automatically remove ho jata hai
+Always ek complete line
+🔥 Under the hood (important)
+
+👉 readline kya karta hai:
+
+internally stdin.on('data') use karta hai
+buffer banata hai
+newline (\n) detect karta hai
+phir line event fire karta hai
+
+👉 Flow:
+
+keyboard → stdin (data events) → readline buffer → line event
+🔹 Real analogy
+data = raw microphone noise 🎤
+line = processed sentence 🧠
+🔥 Example side-by-side
+process.stdin.on("data", (chunk) => {
+  console.log("DATA:", chunk.toString());
+});
+rl.on("line", (line) => {
+  console.log("LINE:", line);
+});
+Input:
+hello
+
+👉 Output:
+
+DATA: hello\n
+LINE: hello
+⚠️ Brutal Truth
+
+👉 Agar tum CLI bana rahe ho aur data use kar rahe ho:
+
+tum unnecessarily hard mode mein ho ❌
+buffering, trimming, parsing sab manually karna padega
+
+👉 readline use karo:
+
+clean
+predictable
+production-friendly
+🔹 Kab kya use kare?
+Situation	Use
+Custom stream processing	data
+CLI / user input	line ✅
+
+
+Quick Comparison Table
+|--------------------------------------------------------------------|
+|Feature |  stdout           |  stdin              | stderr          |
+|--------------------------------------------------------------------|
+|Type    |  Writable Stream  |  Readable Stream    | Writable Stream |
+|Kaam    |  Output   dikhana |  Input lena         | Errors dikhana  |
+|Method  |  .write()         |  .on('data')        | .write()        |
+|fd      |  1                |  0                  | 2               |
+|--------------------------------------------------------------------|
