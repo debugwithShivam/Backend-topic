@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            height: 6rem;
+            background-color: rgb(161, 74, 244);
+            color: whitesmoke;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        header h3 {
+            font-family: sans-serif;
+            margin: .3rem;
+        }
+
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            background-color: burlywood;
+        }
+
+        .card {
+            padding: 1rem;
+            width: 200px;
+            border-radius: 10px;
+            background: #f9f9f9;
+            background-color: brown;
+            color: whitesmoke;
+             button{
+                margin-top: .4rem;
+                background-color: rgb(236, 155, 50);
+                color: white;
+                font-size: 1.2rem;
+                border-radius: .3rem;
+                border:none;
+                padding: .3rem;
+             }
+        }
+    </style>
+    </style>
+</head>
+
+<body>
+    <header>
+        <h3><a href="/">Home</a></h3>
+        <h3><a href="/cart">Cart</a></h3>
+        <h3><a href="/create">Create</a></h3>
+    </header>
+    <div class="product-container">
+            <% products.forEach(product=> { %>
+                <div class="card">
+                    <h2>
+                        <%= product.product %>
+                    </h2>
+                    <p>Price: ₹<%= product.price %>
+                    </p>
+                    <p>Rating: <%= product.rating %>
+                    </p>
+                    <form action="/add-to-cart" method="POST">
+                        <input type="hidden" name="product" value="<%= product.product %>">
+                        <input type="hidden" name="price" value="<%= product.price %>">
+                        <input type="hidden" name="rating" value="<%= product.rating %>">
+                        <button type="submit">Add To cart</button>
+                    </form>
+                </div>
+                <% }) %>
+    </div>
+</body>
+
+</html>

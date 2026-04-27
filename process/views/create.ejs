@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            height: 6rem;
+            background-color: rgb(161, 74, 244);
+            color: whitesmoke;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        header h3 {
+            font-family: sans-serif;
+            margin: .3rem;
+        }
+
+      .create-product {
+    width: 350px;
+    margin: 50px auto;
+    padding: 25px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
+}
+
+.create-product form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.create-product input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.create-product input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0,123,255,0.3);
+}
+
+.create-product input[type="submit"] {
+    padding: 12px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.create-product input[type="submit"]:hover {
+    background: #0056b3;
+}
+
+    </style>
+    </style>
+</head>
+
+<body>
+    <header>
+        <h3><a href="/">Home</a></h3>
+        <h3><a href="/cart">Cart</a></h3>
+        <h3><a href="/create">Create</a></h3>
+    </header>
+    <div class="create-product">
+        <form action="/" method="POST">
+            <input type="text" placeholder="Product Name">
+            <input type="text" placeholder="Product Price">
+            <input type="text" placeholder="Product Rating">
+            <input type="submit" value="Add">
+        </form>
+    </div>
+</body>
+</html>

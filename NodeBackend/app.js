@@ -1,5 +1,6 @@
 const http = require('http')
 const testingSyntax = require('./syntax')
+const { Buffer } = require('buffer')
 // const server = http.createServer((req,res)=>{
 //     console.log(req)
 // })

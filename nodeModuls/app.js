@@ -20,6 +20,24 @@ dotenv.config()
 // let server = http.createServer(processStream)
 // let server = http.createServer(stream)
 
+// const server = net.createServer((socket) => {
+//   socket.on("data", (data) => {
+//     console.log("RAW DATA:\n");
+//     console.log(data.toString()); // 👈 yahan asli HTTP dikhega
+
+//     // manual HTTP response bhejna padega
+//     socket.write(
+//       "HTTP/1.1 200 OK\r\n" +
+//       "Content-Type: text/html\r\n" +
+//       "Content-Length: 12\r\n" +
+//       "\r\n" +
+//       "Hello World!"
+//     );
+
+//     socket.end();
+//   });
+// });
+
 const server = net.createServer((socket) => {
   console.log("Client connected");
 
@@ -27,7 +45,14 @@ const server = net.createServer((socket) => {
     const msg = data.toString().trim();
     console.log("Received:", msg);
 
-    socket.write("Server says: " + msg + "\n");
+    socket.write(
+      "HTTP/1.1 200 OK\r\n" +
+      "Content-Type: text/plain\r\n" +
+      "Content-Length: 12\r\n" +
+      "\r\n" +
+      "Hello World!"
+    );
+    socket.end();
   });
 
   socket.on('end', () => {

@@ -157,3 +157,10 @@ Transform →  modify karo   (compression, encryption)
 .pipe() se streams ko chain karo → memory efficient!
 ```
 
+
+| Type      | Kaam                  |
+| --------- | --------------------- |
+| Readable  | sirf read             |
+| Writable  | sirf write            |
+| Duplex    | read + write          |
+| Transform | read + modify + write |
