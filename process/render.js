@@ -17,3 +17,4 @@ function renderHtml(res,fileName,data=null){
 }
 
 module.exports = renderHtml
+
