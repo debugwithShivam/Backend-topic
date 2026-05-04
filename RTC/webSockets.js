@@ -1,24 +1,27 @@
 //npm i ws
-const WebSockets = require('ws')
+const WebSocket = require('ws');
 
-const server = new WebSockets.Server({ port: 8080 });
+const server = new WebSocket.Server({ port: 8080 });
 
-const socket = new WebSocket("ws://localhost:8080");
+const clients = new Set()
+server.on("connection", (socket) => {
+  console.log("Client Connected");
 
-socket.onopen = () => {
-  console.log("Connected to server");
-  socket.send("Hello server");
-};
+  clients.add(socket)
+  socket.send("Welcome!");
+  socket.on("message", (msg) => {
+    const text = msg.toString();
+    console.log("Message:", text);
+    clients.forEach(client => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(text);
+      }
+    });
+  });
+  socket.on("close", () => {
+    console.log("Client Disconnected");
+    clients.delete(socket); // remove
+  });
+});
 
-socket.onmessage = (event) => {
-  console.log("Server:", event.data);
-};
-
-socket.onclose = () => {
-  console.log("Connection closed");
-};
-
-socket.onerror = (err) => {
-  console.log("Error:", err);
-};
-console.log('WebSocket server running at ws://localhost:8080');
+console.log("ws://localhost:8080");

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1></h1>
+    <button>Click</button>
+    <script>
+
+        const socket = new WebSocket("ws://localhost:8080");
+        const tag = document.querySelector('h1')
+        const btn = document.querySelector('button')
+
+        let count = 0
+        tag.innerText = count
+
+        socket.onopen = () => {
+            console.log("Connected");
+            socket.send("Hello from browser");
+        };
+
+        socket.onmessage = (e) => {
+            console.log("Server:", e.data);
+        };
+
+        btn.onclick = () => {
+            count++;
+            tag.innerText = count;
+
+            socket.send("Count is: " + count);
+        };
+
+    </script>
+</body>
+
+</html>
