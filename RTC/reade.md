@@ -39,13 +39,62 @@ Example:-Chap App , Real Time Dashboard , Trading platform
            |
            |
  Client ek baar connection banata hai 
- fir server jit na event hai utna event 
+ fir server jitne event hai utna event 
  bhaja ta raha ta hai server latar replay
  update client bhi bich bich ma puch ta hai 
  server sa are you listening (Server sent event)
 
 ``LinghWeight hota ha``
 ``ya Bhi Proxies par kam kar ta hai``
+
+*content-type: text/event-stream*
+ye sabse important hai.
+👉 normally server kya karta hai?
+request aayi
+response diya
+connection close
+
+👉 lekin yaha tum keh rahe ho:
+“main ek stream bhejunga, ek baar me pura data nahi”
+ye use hota hai Server-Sent Events (SSE) me
+
+iska matlab:
+server client ko continuously data bhej sakta hai
+bina baar-baar request ke
+
+jaise:
+live notifications
+live chat updates
+stock price updates
+
+
+```js
+res.writeHead(200, {
+    'content-type': 'text/event-stream',
+    'cache-control': 'no-cache',
+    'Connection': 'keep-alive'
+})
+```
+
+
+*cache-control: no-cache*
+
+👉 browser ko bol rahe ho:
+“is data ko cache mat karna”
+
+kyunki:
+ye live data hai
+agar cache ho gaya to purana data dikhega
+
+*Connection: keep-alive*
+
+👉 ye bolta hai:
+“connection band mat karna”
+normal HTTP me:
+request → response → connection close
+
+yaha:
+request → connection open rahega → server baar-baar data bhejega
 
 3. Web Scokets
 
