@@ -107,8 +107,8 @@ request → connection open rahega → server baar-baar data bhejega
 |--------------------------|
            |
            |
- channel open ki raha ta hai 
- ab jitni bhi bar client bhaj da 
+ channel open hi raha ta hai 
+ jitni bhi bar client bhaj da 
  ya server bhaje channel open hi raha ta hai  
 
 ``Bi-Directional``
