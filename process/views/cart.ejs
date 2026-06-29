@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            height: 6rem;
+            background-color: rgb(161, 74, 244);
+            color: whitesmoke;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        header h3 {
+            font-family: sans-serif;
+            margin: .3rem;
+        }
+
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            background-color: burlywood;
+        }
+
+        .card {
+            padding: 1rem;
+            width: 200px;
+            border-radius: 10px;
+            background: #f9f9f9;
+            background-color: brown;
+            color: whitesmoke;
+        }
+    </style>
+    </style>
+</head>
+
+<body>
+    <header>
+        <h3><a href="/">Home</a></h3>
+        <h3><a href="/cart">Cart</a></h3>
+        <h3><a href="/create">Create</a></h3>
+    </header>
+    <div class="cart-container">
+
+        <% if(products.length===0){ %>
+            <h2>Cart is empty</h2>
+            <% } %>
+
+                <% products.forEach(item=> { %>
+                    <div class="card">
+                        <h2>
+                            <%= item.product %>
+                        </h2>
+                        <p>Price: ₹<%= item.price %>
+                        </p>
+                        <p>Rating: <%= item.rating %>
+                        </p>
+                    </div>
+                    <% }) %>
+
+    </div>
+</body>
+
+</html>

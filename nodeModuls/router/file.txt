@@ -1,0 +1,72 @@
+📂 Important Methods (with real use)
+🔹 1. path.join()
+path.join('folder', 'file.txt');
+
+👉 Output:
+
+folder/file.txt   (Linux)
+folder\file.txt   (Windows)
+
+✔️ Most used method
+
+🔹 2. path.resolve()
+path.resolve('folder', 'file.txt');
+
+👉 Returns absolute path
+
+Example:
+
+/home/user/project/folder/file.txt
+⚠️ Difference (JOIN vs RESOLVE)
+Feature	join	resolve
+Relative path	✔️	❌
+Absolute path	❌	✔️
+Use case	building paths	finding full path
+🔹 3. path.basename()
+path.basename('/folder/file.txt');
+
+👉 Output:
+
+file.txt
+🔹 4. path.dirname()
+path.dirname('/folder/file.txt');
+
+👉 Output:
+
+/folder
+🔹 5. path.extname()
+path.extname('file.txt');
+
+👉 Output:
+
+.txt
+🔹 6. path.parse()
+path.parse('/folder/file.txt');
+
+👉 Output:
+
+{
+  root: '/',
+  dir: '/folder',
+  base: 'file.txt',
+  ext: '.txt',
+  name: 'file'
+}
+🔹 7. path.format()
+
+Reverse of parse:
+
+path.format({
+  dir: '/folder',
+  base: 'file.txt'
+});
+📍 Special Variables (VERY IMPORTANT)
+🔥 __dirname
+console.log(__dirname);
+
+👉 Current file’s directory
+
+🔥 __filename
+console.log(__filename);
+
+👉 Full file path
