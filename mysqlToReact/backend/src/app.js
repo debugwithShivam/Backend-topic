@@ -3,7 +3,7 @@ import morgan from 'morgan';
 import authRouter from './router/auth.routes.js';
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
-import db from './db/dataBase.js';
+import {db} from './db/dataBase.js';
 import path from 'path'
 
 let app = express();

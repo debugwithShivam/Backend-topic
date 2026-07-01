@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import config from "../config/config.js";
-import db from "../db/dataBase.js";
+import {db} from "../db/dataBase.js";
 
 export default async function checkAuth(req,res) {
     let token = req.cookies.accesstOKEN;

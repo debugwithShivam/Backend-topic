@@ -9,12 +9,27 @@ const db = mysql.createConnection({
     port:'3306'
 })
 
+const productsDb = mysql.createConnection({
+    host:'localhost',
+    user:"root",
+    password:'newpassword',
+    database:'products',
+    port:'3306'
+})
+
 db.connect((err) => {
     if (err) {
         console.log("DB Error:", err);
         return;
     }
-    console.log("MySQL Connected");
+    console.log("MySQL Connected to auth_user");
+});
+productsDb.connect((err) => {
+    if (err) {
+        console.log("DB Error:", err);
+        return;
+    }
+    console.log("MySQL Connected to products");
 });
 
-export default db;
+export  { db,productsDb};

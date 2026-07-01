@@ -1,7 +1,7 @@
 import config from "../config/config.js";
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt'
-import db from "../db/dataBase.js";
+import {db} from "../db/dataBase.js";
 
 export default async function singIn(req, res) {
     try {
