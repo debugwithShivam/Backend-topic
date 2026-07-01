@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const labelSt = {
   display: "block",
@@ -59,6 +60,8 @@ export default function AuthLogin() {
     password: "",
   });
 
+  let navigate = useNavigate()
+
   async function createAccount(e) {
     console.log("hwb");
     e.preventDefault();
@@ -81,6 +84,7 @@ export default function AuthLogin() {
         },
         { withCredentials: true },
       );
+      navigate('/setting')
       setAccountDetail({
         firstName: "",
         lastName: "",
@@ -241,25 +245,6 @@ export default function AuthLogin() {
             }}
           />
         </div>
-
-        <button
-        type="button"
-          style={{
-            width: "100%",
-            height: "42px",
-            borderRadius: "10px",
-            border: "none",
-            background: "linear-gradient(135deg, #7c3aed, #a855f7)",
-            color: "#fff",
-            fontSize: "0.85rem",
-            fontWeight: 600,
-            cursor: "pointer",
-            letterSpacing: "0.06em",
-            marginBottom: "0.6rem",
-          }}
-        >
-          SIGN IN
-        </button>
 
         <button
           type="button"

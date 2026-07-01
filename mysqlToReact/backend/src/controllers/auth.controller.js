@@ -12,7 +12,7 @@ export default async function singIn(req, res) {
         const query = "INSERT INTO users(firstName,lastName,email,password)VALUES (?,?,?,?)";
         
         console.log(firstName,lastName,email,password)
-        db.query(query, [firstName, lastName, email, password], (err, result) => {
+        db.query(query, [firstName, lastName, email, hashedPassword], (err, result) => {
             console.log("inside callback");
             if (err) {
                 console.log("MYSQL ERROR:", err);
@@ -34,13 +34,13 @@ export default async function singIn(req, res) {
             res.cookie("accesstOKEN", accesstOKEN, {
                 httpOnly: true,
                 sameSite: "lax",
-                secure: true,
+                secure: false,
                 maxAge: 24 * 60 * 60 * 1000
             })
             res.cookie("refreshToken", refreshToken, {
                 httpOnly: true,
                 sameSite: "lax",
-                secure: true,
+                secure: false,
                 maxAge: 24 * 60 * 60 * 1000
             });
             return res.status(201).json({
