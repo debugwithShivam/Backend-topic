@@ -5,7 +5,7 @@ export default function Layout() {
   const authStatus = localStorage.getItem("authStatus");
   return (
     <div className=" ">
-      <header className=" absolute top-0 left-0 text-white  w-screen flex z-[999] justify-between items-center p-[1rem 5rem]">
+      <header className=" absolute top-0 left-0 text-white  w-full flex z-[999] justify-between items-center p-[1rem 5rem]">
         <h1 className="ml-2 text-[3rem] font-light text-black">MCODE</h1>
         <nav className="flex items-center gap-6 bg-white text-black p-2 rounded-xl font-bold font-medium">
           <NavLink to="/" className={({isActive})=>isActive?'bg-black p-2 rounded-xl text-white' : 'text-black bg-white'}>
