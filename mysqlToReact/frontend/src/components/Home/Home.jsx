@@ -2,6 +2,8 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, EffectFade } from "swiper/modules";
 import Product from "./Product";
+import Footer from "./Footer";
+import FeatureCards from "./FeatureCards";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -161,6 +163,8 @@ export default function Home() {
     <div className="">
       <Product/>
     </div>
+    <FeatureCards/>
+    <Footer/>
       </>
   );
 }

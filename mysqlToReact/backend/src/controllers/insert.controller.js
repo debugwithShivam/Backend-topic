@@ -25,7 +25,7 @@ export default async function insertproduct(req,res){
                 console.log(err);
             } else {
                 console.log("INSERT FILE RUNNING");
-                console.log("Inserted:", product.name);
+                console.log("Inserted:", product.image);
             }
         })
     })

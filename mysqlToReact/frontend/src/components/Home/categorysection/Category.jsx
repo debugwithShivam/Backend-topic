@@ -8,7 +8,7 @@ export default function Category() {
           Top Categories
         </h1>
 
-        <div className="grid h-[700px] grid-cols-4 grid-rows-2 gap-5">
+        <div className="grid h-[700px] m-10 grid-cols-4 grid-rows-2 gap-5">
           {categoryData.map((item) => (
             <CategoryCard key={item.id} {...item} />
           ))}
