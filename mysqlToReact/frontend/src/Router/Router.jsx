@@ -7,6 +7,9 @@ import LoginPage from "../components/login/LoginPage";
 import Setting from "../components/Setting/Setting";
 import Order from "../components/Orders/Order";
 import ProtectedRoute from "./ProtectedRoute";
+import ChooseProduct from "../components/ChooseProduct/ChooseProduct";
+import { useProducts } from "../CenterProductData";
+
 
 const router = createBrowserRouter([
   {
@@ -24,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "/Order",
         element: <Order />,
+      },
+      {
+        path: "/ChooseProduct",
+        element: <ChooseProduct />,
       },
       {
         path: "/login",
