@@ -187,7 +187,7 @@ export default function ChooseProduct() {
               </div>
             </div>
 
-            <CartbuyProduct/>
+            <CartbuyProduct qty={qty}/>
 
             <div className="mt-6 text-xs text-neutral-400 flex gap-3">
               <h1>delivery :</h1>
@@ -200,6 +200,7 @@ export default function ChooseProduct() {
         {randomProducts?.map((item, i) => (
           <ProductsCard
             key={i}
+            id={item.id}
             brand={item.brand}
             category={item.category}
             color={item.color}

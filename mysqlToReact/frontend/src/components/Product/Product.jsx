@@ -36,6 +36,7 @@ export default function Product() {
             .map((item, i) => (
               <ProductsCard
                 key={i}
+                id={item.id}
                 brand={item.brand}
                 category={item.category}
                 color={item.color}

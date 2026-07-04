@@ -22,7 +22,7 @@ export default async function singIn(req, res) {
             const accesstOKEN = jwt.sign(
                 { id: result.insertId, email },
                 config.ACCESSTOKEN,
-                { expiresIn: '15m' }
+                { expiresIn: '2d' }
             )
 
             const refreshToken = jwt.sign(
