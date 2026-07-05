@@ -43,96 +43,7 @@ const SIDEBAR_ITEMS = [
   { label: "Footwear", icon: ShoppingBag },
 ];
 
-const STATS = [
-  { label: "All", value: "23145" },
-  { label: "T-shirt", value: "224" },
-  { label: "Jeans pant", value: "125" },
-  { label: "Shirt", value: "509" },
-  { label: "Trouser", value: "100" },
-  { label: "Koti", value: "225" },
-  { label: "Money bag", value: "425" },
-];
 
-const PRODUCTS = [
-  {
-    name: "Cotton Tee",
-    code: "1254854",
-    available: 200,
-    price: 120,
-    color: "#1F1F1F",
-    accent: "#F4B400",
-  },
-  {
-    name: "Graphic Tee",
-    code: "1254855",
-    available: 200,
-    price: 120,
-    color: "#D3402A",
-    accent: "#1F1F1F",
-  },
-  {
-    name: "Basic White",
-    code: "1254856",
-    available: 200,
-    price: 120,
-    color: "#EDEDED",
-    accent: "#1F1F1F",
-  },
-  {
-    name: "Denim Jacket",
-    code: "1254857",
-    available: 200,
-    price: 120,
-    color: "#3B5C82",
-    accent: "#F4B400",
-  },
-  {
-    name: "Grey Hoodie",
-    code: "1254858",
-    available: 200,
-    price: 120,
-    color: "#8A8A8A",
-    accent: "#1F1F1F",
-  },
-  {
-    name: "Sky Shirt",
-    code: "1254859",
-    available: 200,
-    price: 120,
-    color: "#A9C4DB",
-    accent: "#1F1F1F",
-  },
-  {
-    name: "Green Sweater",
-    code: "1254860",
-    available: 200,
-    price: 120,
-    color: "#2F4B3C",
-    accent: "#F4B400",
-  },
-  {
-    name: "Zip Jacket",
-    code: "1254861",
-    available: 200,
-    price: 120,
-    color: "#1F1F1F",
-    accent: "#D3402A",
-  },
-  {
-    name: "Denim Wash",
-    code: "1254862",
-    available: 200,
-    price: 120,
-    color: "#5A7EA6",
-    accent: "#1F1F1F",
-  },
-];
-
-const ORDER_ITEMS = [
-  { name: "Cotton Tee", code: "1254854", size: "M", qty: 2, price: 200 },
-  { name: "Graphic Tee", code: "1254854", size: "L", qty: 1, price: 200 },
-  { name: "Denim Jacket", code: "1254854", size: "M", qty: 2, price: 200 },
-];
 
 function Sidebar() {
   return (
@@ -192,9 +103,7 @@ function Tabs() {
 
 function StatsStrip() {
   const { data } = cardData();
-  data?.map((item) => {
-    console.log(item.product_name);
-  });
+ 
   return (
     <div className="grid grid-cols-2 gap-3 px-6 py-5 sm:grid-cols-4 lg:grid-cols-7">
       {data?.map((s, i) => (
@@ -264,7 +173,6 @@ function ProductCard({ product }) {
 
 function ProductGrid() {
   const { data } = cardData();
-  console.log(data);
   return (
     <div className="px-6 pb-8">
       <div className="mb-4 flex items-center justify-between">
@@ -292,13 +200,15 @@ function ProductGrid() {
 
 function OrderPanel() {
   let { data } = cardData();
-  let total = data?.reduce((r,i)=>r+i)
-console.log(total)
-console.log(data)
-  const subtotal = ORDER_ITEMS.reduce((sum, i) => sum + i.price, 0);
-  const discount = subtotal * 0.05;
-  const tax = subtotal * 0.02;
-  const total = subtotal - discount + tax;
+  let sum = 0
+
+let totalPrice = data?.reduce((sum, item) => {
+  return sum + (item.total_price*item.quantity);
+}, 0);
+
+  const discount = totalPrice * 0.05;
+  const tax = totalPrice * 0.02;
+  const total = totalPrice - discount + tax;
   return (
     <aside className="flex w-full max-w-sm shrink-0 flex-col border-l border-neutral-200 bg-white">
       <div className="border-b border-neutral-200 px-5 py-4">
@@ -324,7 +234,7 @@ console.log(data)
               </p>
             </div>
             <p className="text-sm font-semibold text-neutral-900">
-              ${item.product_price}
+              ${item.total_price}
             </p>
           </div>
         ))}
@@ -347,7 +257,7 @@ console.log(data)
 
         <div className="flex justify-between pt-1 text-base font-semibold text-neutral-900">
           <span>Total Amount</span>
-          <span>${total.toFixed(2)}</span>
+          <span>${totalPrice}</span>
         </div>
       </div>
     </aside>
