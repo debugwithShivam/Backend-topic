@@ -7,14 +7,16 @@ function cartProduct(req, res) {
 
     let tooken = req.cookies.accesstOKEN
   
+
     if (!tooken) {
-        return res.status(401).josn({ nessage: "Unauthorizes" });
+        return res.status(402).json({ nessage: "Unauthorizes" });
     }
     try {
         const decoded = jwt.verify(tooken, config.ACCESSTOKEN);
         const userId = decoded.id;
         const query = "INSERT INTO CartOrders(user_id,product_id,quantity,product_name,product_price,image,category)VALUES (?,?,?,?,?,?,?)"
-        productOrder.query(query, [user_id, product_id, quantity, product_name, product_price, image,category], (err, result) => {
+        console.log(decoded)
+        productOrder.query(query, [userId, product_id, quantity, product_name, product_price, image,category], (err, result) => {
             console.log("inside callback");
             if (err) {
                 console.log("MYSQL ERROR:", err);

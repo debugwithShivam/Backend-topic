@@ -1,11 +1,11 @@
 export default function Hero() {
+  let data = new Date().getDate()
   return (
     <div className="min-h-scree n bg-[#f7f6f3] text-[#d65a3a] px-6 md:px-10  p-4">
       
-      {/* Navbar */}
       <nav className="flex items-center justify-between py-6">
         <div className="text-sm uppercase tracking-wide cursor-pointer">
-          MENU <span className="ml-1">17</span>
+          MENU <span className="ml-1">{data}</span>
         </div>
 
         <div className="text-2xl font-medium tracking-tight">

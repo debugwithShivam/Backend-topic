@@ -16,7 +16,7 @@ import {
   Bell,
   Menu,
 } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery,useQueryClient,useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
 async function getOrderdata() {
@@ -34,6 +34,7 @@ function cardData() {
     queryFn: getOrderdata,
   });
 }
+
 
 const SIDEBAR_ITEMS = [
   { label: "Books", icon: LayoutGrid },
@@ -133,6 +134,19 @@ function StatsStrip() {
  * a single flat accent block instead of a photo).
  */
 function ProductCard({ product }) {
+  const queryClint = useQueryClient();
+  const deleteMutation = useMutation({
+    mutationFn:(product_id)=>
+       axios.post(`http://localhost:4876/auth/deleteCart`,{
+        product_id
+      }),
+    onSuccess:()=>{
+      queryClint.invalidateQueries({
+        queryKey:["cartdata"]
+      })
+    }
+  })
+  
   return (
     <div className="flex flex-col border border-neutral-900 bg-white text-neutral-900">
       <div className="flex items-stretch justify-between border-b border-neutral-900">
@@ -159,12 +173,12 @@ function ProductCard({ product }) {
             Code <span className="text-neutral-900">{product.quantity}</span>
           </p>
           <p>
-            Available{" "}
+            Available
             <span className="text-neutral-900">{product.total_price}</span>
           </p>
         </div>
-        <div className="flex w-20 items-center justify-center border-l border-neutral-900">
-          <span className="h-3 w-3 rounded-full bg-red-500" />
+        <div className="flex w-20 h-full items-center justify-center border-l border-neutral-900">
+          <span className="h-3 w-3 rounded-full bg-red-500" onClick={()=>deleteMutation.mutate(product.product_id)}/>
         </div>
       </div>
     </div>

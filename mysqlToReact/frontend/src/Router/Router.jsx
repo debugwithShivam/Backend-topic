@@ -8,6 +8,7 @@ import Setting from "../components/Setting/Setting";
 import Order from "../components/Orders/Order";
 import ProtectedRoute from "./ProtectedRoute";
 import ChooseProduct from "../components/ChooseProduct/ChooseProduct";
+import BuyOrder from "../components/Orders/BuyOrder";
 import { useProducts } from "../CenterProductData";
 
 
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/BuyOrder",
+        element: <BuyOrder />,
       },
       {
         path: "/Product",

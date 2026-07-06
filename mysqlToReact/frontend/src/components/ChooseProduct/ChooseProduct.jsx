@@ -12,6 +12,7 @@ import Footer from "./Footer";
 import { useLocation } from "react-router-dom";
 import { useProducts } from "../../CenterProductData";
 import ProductsCard from "../Product/Productscard";
+import ChooseCard from "./ChooseCard";
 
 const FacebookIcon = (props) => (
   <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
@@ -49,14 +50,7 @@ export default function ChooseProduct() {
   const location = useLocation();
   
   let { data } = useProducts();
-  
-  const randomProducts = data
-    ?.sort(() => Math.random() - 0.5)
-    .slice(0, 8);
-
-  useEffect(() => {
-    console.log("hellojh");
-  }, []);
+ 
 
   const [getdata, setGetdata] = useState(() =>
     JSON.parse(localStorage.getItem("chooseProduct")),
@@ -196,27 +190,7 @@ export default function ChooseProduct() {
           </section>
         </main>
       </div>
-      <div className="grid grid-cols-4">
-        {randomProducts?.map((item, i) => (
-          <ProductsCard
-            key={i}
-            id={item.id}
-            brand={item.brand}
-            category={item.category}
-            color={item.color}
-            delivery={item.delivery}
-            description={item.description}
-            image={item.image}
-            name={item.name}
-            offer={item.offer}
-            price={item.price}
-            rating={item.rating}
-            size={item.size}
-            stock={item.stock}
-            title={item.title}
-          />
-        ))}
-      </div>
+      <ChooseCard/>
       <Footer />
     </>
   );

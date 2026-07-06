@@ -16,11 +16,20 @@ const productsDb = mysql.createConnection({
     database:'products',
     port:'3306'
 })
+
 const productOrder = mysql.createConnection({
     host:'localhost',
     user:"root",
     password:'newpassword',
-    database:'productOrder',
+    database:'ProductOrder',
+    port:'3306'
+})
+
+const Buyproduct = mysql.createConnection({
+    host:'localhost',
+    user:"root",
+    password:'newpassword',
+    database:'Buyproduct',
     port:'3306'
 })
 
@@ -47,4 +56,13 @@ productOrder.connect((err) => {
     }
     console.log("MySQL Connected to productOrder");
 });
-export  { db,productsDb,productOrder};
+
+Buyproduct.connect((err) => {
+    if (err) {
+        console.log("DB Error:", err);
+        return;
+    }
+    console.log("MySQL Connected to Buyproduct");
+});
+
+export  { db,productsDb,productOrder,Buyproduct};
