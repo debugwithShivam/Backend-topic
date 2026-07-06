@@ -3,7 +3,6 @@ import { useProducts } from '../../CenterProductData';
 import ProductsCard from '../Product/Productscard';
 const ChooseCard = React.memo(function childe() {
       let { data } = useProducts();
-      
       const randomProducts = data
         ?.sort(() => Math.random() - 0.5)
         .slice(0, 8);

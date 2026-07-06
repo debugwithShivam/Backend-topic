@@ -3,7 +3,7 @@ import config from "../config/config.js"
 import jwt from 'jsonwebtoken'
 
 function cartProduct(req, res) {
-    const { user_id, product_id, quantity, product_name, product_price, total_price, image,category } = req.body
+    const { user_id, product_id, quantity, product_name, product_price, image,category } = req.body
 
     let tooken = req.cookies.accesstOKEN
   

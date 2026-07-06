@@ -13,6 +13,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
 export default function CartbuyProduct({ qty }) {
+  console.log(qty)
   let getOrderData = JSON.parse(localStorage.getItem("chooseProduct"));
   const totalProduct = getOrderData.price * qty;
   const queryClient = useQueryClient()
@@ -40,10 +41,18 @@ export default function CartbuyProduct({ qty }) {
     }
   }
 
+  function addQuantity(){
+    let product = JSON.parse(localStorage.getItem("chooseProduct"));
+
+  product.quantity = qty;
+  console.log(qty)
+
+  localStorage.setItem("chooseProduct", JSON.stringify(product));
+  }
+
   return (
     <div className="mt-8 flex flex-wrap items-center gap-4">
       <button className="flex items-center gap-2 rounded-full bg-blue-600 px-8 py-3 text-sm font-medium text-white transition hover:bg-blue-700"  onClick={() => {
-            console.log("clicked");
             orderProduct();
           }}>
         <ShoppingCart
@@ -53,8 +62,8 @@ export default function CartbuyProduct({ qty }) {
         Add to Cart
       </button>
       <Link to='/BuyOrder'>
-        <button className="flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-8 py-3 text-sm font-medium text-white transition hover:scale-105">
-          <ShoppingCart className="h-4 w-4" />
+        <button className="flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-8 py-3 text-sm font-medium text-white transition hover:scale-105" onClick={()=>addQuantity()}>
+          <ShoppingCart className="h-4 w-4"  />
           Buy Now
         </button>
       </Link>
