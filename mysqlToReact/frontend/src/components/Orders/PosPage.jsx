@@ -17,8 +17,9 @@ import {
   Menu,
 } from "lucide-react";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
+import OrderProductList from "./OrderProductList.jsx";
 import axios from "axios";
-import OrdereProduct from './OrdereProduct.jsx'
+import OrdereProduct from "./OrdereProduct.jsx";
 
 async function getOrderdata() {
   try {
@@ -39,67 +40,10 @@ function cardData() {
 const SIDEBAR_ITEMS = [
   { label: "Books", icon: LayoutGrid },
   { label: "Electronics", icon: ShoppingCart, active: true },
-  { label: "Kitchen", icon: BarChart3 },
+  { label: "Home & Kitchen", icon: BarChart3 },
   { label: "Clothing", icon: Wallet },
   { label: "Footwear", icon: ShoppingBag },
 ];
-
-function Sidebar() {
-  return (
-    <aside className="hidden w-64 shrink-0 flex-col border-r border-neutral-200 bg-white px-4 py-6 lg:flex">
-      <div className="mb-8 flex items-center gap-2 px-2">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-900 text-white">
-          ✦
-        </div>
-        <span className="text-lg font-semibold tracking-tight text-neutral-900">
-          Starline
-        </span>
-      </div>
-
-      <nav className="flex flex-1 flex-col gap-1">
-        {SIDEBAR_ITEMS.map(({ label, icon: Icon, active }) => (
-          <button
-            key={label}
-            className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
-              active
-                ? "bg-lime-300 text-neutral-900"
-                : "text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900"
-            }`}
-          >
-            <Icon size={18} strokeWidth={2} />
-            {label}
-          </button>
-        ))}
-      </nav>
-    </aside>
-  );
-}
-
-function StatsStrip() {
-  const { data } = cardData();
-
-  return (
-    <div className="grid grid-cols-2 gap-3 px-6 py-5 sm:grid-cols-4 lg:grid-cols-7">
-      {data?.map((s, i) => (
-        <div
-          key={i}
-          className={`rounded-2xl border px-4 py-3 ${
-            i === 0
-              ? "border-neutral-900 bg-neutral-900 text-white"
-              : "border-neutral-200 bg-white text-neutral-900"
-          }`}
-        >
-          <p
-            className={`text-xs font-medium ${i === 0 ? "text-neutral-300" : "text-neutral-400"}`}
-          >
-            {s.product_name}
-          </p>
-          <p className="mt-1 text-lg font-semibold">{s.product_price}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
 
 /**
  * Catalog-sheet style product card — modeled on the clean, bordered
@@ -161,34 +105,73 @@ function ProductCard({ product }) {
   );
 }
 
-function ProductGrid() {
+function ProductGrid({ category }) {
+  console.log(category);
+  const [viewAll, setViewAll] = useState(true);
   const { data } = cardData();
+  console.log(data);
   return (
-    <div className="px-6 pb-8">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-base font-semibold text-neutral-900">
-          Choose Products
-        </h2>
-        <div className="flex items-center gap-3">
-          <button className="rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm text-neutral-600">
-            View All Orders
-          </button>
-          <button className="flex items-center gap-2 rounded-full bg-neutral-900 px-4 py-2 text-sm text-white">
-            <Barcode size={16} /> Scan Barcode
-          </button>
-        </div>
-      </div>
+    <>
+      <div className="grid grid-cols-2 gap-3 px-6 py-5 sm:grid-cols-4 lg:grid-cols-7">
+        {(viewAll
+          ? data?.filter((item) => item.category === category)
+          : data
+        )?.map((s, i) => (
+          <div
+            key={i}
+            className={`rounded-2xl border px-4 py-3 ${
+              i === 0
+                ? "border-neutral-900 bg-neutral-900 text-white"
+                : "border-neutral-200 bg-white text-neutral-900"
+            }`}
+          >
+            <p
+              className={`text-xs font-medium ${
+                i === 0 ? "text-neutral-300" : "text-neutral-400"
+              }`}
+            >
+              {s.product_name}
+            </p>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        {data?.map((p, i) => (
-          <ProductCard key={i} product={p} />
+            <p className="mt-1 text-lg font-semibold">{s.product_price}</p>
+          </div>
         ))}
       </div>
-    </div>
+      <div className="px-6 pb-8">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-base font-semibold text-neutral-900">
+            Choose Products
+          </h2>
+          <div className="flex items-center gap-3">
+            <button
+               className={`rounded-full border border-neutral-200  px-4 py-2 text-sm text-neutral-600 ${viewAll ? "bg-white text-black" : "bg-black text-white"}`}
+              onClick={() => setViewAll(false)}
+            >
+              View All Orders
+            </button>
+            <button
+                className={`flex items-center gap-2 rounded-full bg-neutral-900 px-4 py-2 text-sm  ${viewAll ? "bg-black text-white" : "bg-white text-black"}`}
+              onClick={() => setViewAll(true)}
+            >
+              <Barcode size={16} /> Scan Barcode
+            </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {(viewAll
+            ? data?.filter((item) => item.category == category)
+            : data
+          )?.map((p, i) => (
+            <ProductCard key={i} product={p} />
+          ))}
+        </div>
+      </div>
+    </>
   );
 }
 
-function OrderPanel() {
+function CartPanel() {
   let { data } = cardData();
   let sum = 0;
 
@@ -256,10 +239,39 @@ function OrderPanel() {
 
 export default function PosPage() {
   const [active, setActive] = useState("machine");
+  const [category, setCategory] = useState("Books");
 
   return (
     <div className="flex h-screen w-full bg-neutral-50 font-sans mt-10">
-      <Sidebar />
+      <aside className="hidden w-64 shrink-0 flex-col border-r border-neutral-200 bg-white px-4 py-6 lg:flex">
+        <div className="mb-8 flex items-center gap-2 px-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-900 text-white">
+            ✦
+          </div>
+          <span className="text-lg font-semibold tracking-tight text-neutral-900">
+            Starline
+          </span>
+        </div>
+
+        <nav className="flex flex-1 flex-col gap-1">
+          {SIDEBAR_ITEMS.map(({ label, icon: Icon, active }) => (
+            <button
+              key={label}
+              onClick={() => {
+                setCategory(label);
+              }}
+              className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
+                category === label
+        ? "bg-lime-300 text-neutral-900"
+        : "text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900"
+              }`}
+            >
+              <Icon size={18} strokeWidth={2} />
+              {label}
+            </button>
+          ))}
+        </nav>
+      </aside>
       <div className="flex flex-1 flex-col overflow-hidden">
         <div className="flex gap-8 border-b border-neutral-200 bg-white px-6 pt-4">
           {[
@@ -282,12 +294,13 @@ export default function PosPage() {
         </div>
         <div className="flex flex-1 overflow-hidden">
           <div className="flex-1 overflow-y-auto">
-            <StatsStrip />
-            {active == "machine" ? <ProductGrid /> : <OrdereProduct />} 
-            
-            
+            {active == "machine" ? (
+              <ProductGrid category={category} />
+            ) : (
+              <OrdereProduct category={category} />
+            )}
           </div>
-          <OrderPanel />
+          {active == "machine" ? <CartPanel /> : <OrderProductList />}
         </div>
       </div>
     </div>

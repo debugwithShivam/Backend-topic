@@ -14,7 +14,7 @@ async function getOrderProductData(params) {
 
 export default function OrderProduct() {
   return useQuery({
-    queryKey: ["Orderdata"],
+    queryKey: ["deleteBuyOrder"],
     queryFn: getOrderProductData,
   });
 }

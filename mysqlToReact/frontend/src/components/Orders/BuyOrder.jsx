@@ -73,8 +73,34 @@ export default function BuyOrder() {
     "ORD-" +
     String(Math.abs(hashCode(productdata.name || "order"))).slice(0, 6);
 
-  const handleProceed = () => {
-    setActiveStep((s) => Math.min(s + 1, 3));
+  const handleSubmit = () => {
+    if (activeStep === 1) {
+      // Step 1: sirf validation + agle step par jao, koi API call nahi
+      setActiveStep(2);
+    } else if (activeStep === 2) {
+      // Step 2: yahi par sirf ek baar order place karo
+      insertProduct.mutate(
+        {
+          username: fromData.name,
+          product_id: productdata.id,
+          quantity: fromData.Quantity,
+          product_name: productdata.name,
+          product_price: productdata.price,
+          catogary: productdata.category,
+          image: productdata.image,
+          address_line2: fromData.address,
+          city: fromData.city,
+          state: fromData.state,
+          payment_method: paymentMethod,
+          pin_code: fromData.pincode,
+          email_Address: fromData.email,
+          Phone_number: fromData.phoneNumber,
+        },
+        {
+          onSuccess: () => setActiveStep(3), // API success ke baad hi step 3
+        },
+      );
+    }
   };
 
   const [fromData, setFromData] = useState({
@@ -387,26 +413,8 @@ export default function BuyOrder() {
             )}
 
             <button
-              disabled={!isFormValid}
-              onClick={() => {
-                handleProceed();
-                insertProduct.mutate({
-                  username: fromData.name,
-                  product_id: productdata.id,
-                  quantity: fromData.Quantity,
-                  product_name: productdata.name,
-                  product_price: productdata.price,
-                  catogary: productdata.category,
-                  image: productdata.image,
-                  address_line2: fromData.address,
-                  city: fromData.city,
-                  state: fromData.state,
-                  payment_method: paymentMethod,
-                  pin_code: fromData.pincode,
-                  email_Address: fromData.email,
-                  Phone_number: fromData.phoneNumber,
-                });
-              }}
+              disabled={!isFormValid || insertProduct.isPending}
+              onClick={handleSubmit}
               className="bg-[#1C1B1A] hover:bg-[#B23A2E] text-white font-semibold text-sm uppercase tracking-wide py-3.5 w-full rounded-xl mt-3 transition-colors"
             >
               {activeStep === 1 && "Continue to Payment"}
