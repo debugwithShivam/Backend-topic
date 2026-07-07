@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 async function getCartData() {
   try {
     let response = await axios.get("http://localhost:4876/auth/getCartProduct");
@@ -20,9 +21,7 @@ function cardData() {
 }
 
 export default function Layout() {
-  const { data } = cardData();
-
-
+  const{data}= cardData()
   let dataLenght = data ? Object.keys(data).length : 0;
 
   const authStatus = localStorage.getItem("authStatus");

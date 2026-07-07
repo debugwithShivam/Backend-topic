@@ -16,8 +16,9 @@ import {
   Bell,
   Menu,
 } from "lucide-react";
-import { useQuery,useQueryClient,useMutation } from "@tanstack/react-query";
+import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import OrdereProduct from './OrdereProduct.jsx'
 
 async function getOrderdata() {
   try {
@@ -35,7 +36,6 @@ function cardData() {
   });
 }
 
-
 const SIDEBAR_ITEMS = [
   { label: "Books", icon: LayoutGrid },
   { label: "Electronics", icon: ShoppingCart, active: true },
@@ -43,8 +43,6 @@ const SIDEBAR_ITEMS = [
   { label: "Clothing", icon: Wallet },
   { label: "Footwear", icon: ShoppingBag },
 ];
-
-
 
 function Sidebar() {
   return (
@@ -77,34 +75,9 @@ function Sidebar() {
   );
 }
 
-function Tabs() {
-  const [active, setActive] = useState("machine");
-  return (
-    <div className="flex gap-8 border-b border-neutral-200 bg-white px-6 pt-4">
-      {[
-        { key: "machine", label: "Cart Products" },
-        { key: "dashboard", label: "Orderd Product" },
-      ].map((tab) => (
-        <button
-          key={tab.key}
-          onClick={() => setActive(tab.key)}
-          className={`relative pb-3 text-sm font-medium transition-colors ${
-            active === tab.key ? "text-neutral-900" : "text-neutral-400"
-          }`}
-        >
-          {tab.label}
-          {active === tab.key && (
-            <span className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-neutral-900" />
-          )}
-        </button>
-      ))}
-    </div>
-  );
-}
-
 function StatsStrip() {
   const { data } = cardData();
- 
+
   return (
     <div className="grid grid-cols-2 gap-3 px-6 py-5 sm:grid-cols-4 lg:grid-cols-7">
       {data?.map((s, i) => (
@@ -136,17 +109,17 @@ function StatsStrip() {
 function ProductCard({ product }) {
   const queryClint = useQueryClient();
   const deleteMutation = useMutation({
-    mutationFn:(product_id)=>
-       axios.post(`http://localhost:4876/auth/deleteCart`,{
-        product_id
+    mutationFn: (product_id) =>
+      axios.post(`http://localhost:4876/auth/deleteCart`, {
+        product_id,
       }),
-    onSuccess:()=>{
+    onSuccess: () => {
       queryClint.invalidateQueries({
-        queryKey:["cartdata"]
-      })
-    }
-  })
-  
+        queryKey: ["cartdata"],
+      });
+    },
+  });
+
   return (
     <div className="flex flex-col border border-neutral-900 bg-white text-neutral-900">
       <div className="flex items-stretch justify-between border-b border-neutral-900">
@@ -178,7 +151,10 @@ function ProductCard({ product }) {
           </p>
         </div>
         <div className="flex w-20 h-full items-center justify-center border-l border-neutral-900">
-          <span className="h-3 w-3 rounded-full bg-red-500" onClick={()=>deleteMutation.mutate(product.product_id)}/>
+          <span
+            className="h-3 w-3 rounded-full bg-red-500"
+            onClick={() => deleteMutation.mutate(product.product_id)}
+          />
         </div>
       </div>
     </div>
@@ -214,11 +190,11 @@ function ProductGrid() {
 
 function OrderPanel() {
   let { data } = cardData();
-  let sum = 0
+  let sum = 0;
 
-let totalPrice = data?.reduce((sum, item) => {
-  return sum + (item.total_price*item.quantity);
-}, 0);
+  let totalPrice = data?.reduce((sum, item) => {
+    return sum + item.total_price * item.quantity;
+  }, 0);
 
   const discount = totalPrice * 0.05;
   const tax = totalPrice * 0.02;
@@ -279,15 +255,37 @@ let totalPrice = data?.reduce((sum, item) => {
 }
 
 export default function PosPage() {
+  const [active, setActive] = useState("machine");
+
   return (
     <div className="flex h-screen w-full bg-neutral-50 font-sans mt-10">
       <Sidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
-        <Tabs />
+        <div className="flex gap-8 border-b border-neutral-200 bg-white px-6 pt-4">
+          {[
+            { key: "machine", label: "Cart Products" },
+            { key: "dashboard", label: "Orderd Product" },
+          ].map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => setActive(tab.key)}
+              className={`relative pb-3 text-sm font-medium transition-colors ${
+                active === tab.key ? "text-neutral-900" : "text-neutral-400"
+              }`}
+            >
+              {tab.label}
+              {active === tab.key && (
+                <span className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-neutral-900" />
+              )}
+            </button>
+          ))}
+        </div>
         <div className="flex flex-1 overflow-hidden">
           <div className="flex-1 overflow-y-auto">
             <StatsStrip />
-            <ProductGrid />
+            {active == "machine" ? <ProductGrid /> : <OrdereProduct />} 
+            
+            
           </div>
           <OrderPanel />
         </div>

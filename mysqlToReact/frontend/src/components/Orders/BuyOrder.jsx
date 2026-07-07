@@ -1,4 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const orderSteps = [
   { id: 1, label: "Information" },
@@ -75,8 +77,6 @@ export default function BuyOrder() {
     setActiveStep((s) => Math.min(s + 1, 3));
   };
 
-  console.log(activeStep);
-
   const [fromData, setFromData] = useState({
     name: "",
     phoneNumber: "",
@@ -98,7 +98,22 @@ export default function BuyOrder() {
 
   const isFormValid =
     fromData.name && fromData.phoneNumber && fromData.address && fromData.email;
-const [paymentMethod, setPaymentMethod] = useState("cod");
+  const [paymentMethod, setPaymentMethod] = useState("cod");
+
+  let queryClint = useQueryClient();
+  const insertProduct = useMutation({
+    mutationFn: (data) =>
+      axios.post("http://localhost:4876/auth/buyorder", data, {
+        withCredentials: true,
+      }),
+    onSuccess: () => {
+      queryClint.invalidateQueries({
+        queryKey: ["Orderdata"],
+      });
+    },
+  });
+
+  function orderPlaced() {}
   return (
     <div className="min-h-screen bg-[#FAF8F3] py-14 px-5">
       <style>{`
@@ -312,68 +327,86 @@ const [paymentMethod, setPaymentMethod] = useState("cod");
                     <span className="text-2xl">💳</span>
                   </label>
                 </div>
-                  </>
+              </>
             )}
-           {activeStep == 3 && (
-  <div className="flex flex-col items-center justify-center py-12 text-center">
-    {/* Success Icon */}
-    <div className="w-24 h-24 rounded-full bg-green-100 flex items-center justify-center mb-6">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-12 h-12 text-green-600"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={2.5}
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M5 13l4 4L19 7"
-        />
-      </svg>
-    </div>
+            {activeStep == 3 && (
+              <div className="flex flex-col items-center justify-center py-12 text-center">
+                {/* Success Icon */}
+                <div className="w-24 h-24 rounded-full bg-green-100 flex items-center justify-center mb-6">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-12 h-12 text-green-600"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2.5}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
 
-    <h2 className="text-3xl font-bold text-[#1C1B1A]">
-      Order Placed Successfully!
-    </h2>
+                <h2 className="text-3xl font-bold text-[#1C1B1A]">
+                  Order Placed Successfully!
+                </h2>
 
-    <p className="text-gray-500 mt-3 max-w-md">
-      Thank you for your purchase. Your order has been confirmed and will be
-      shipped soon.
-    </p>
+                <p className="text-gray-500 mt-3 max-w-md">
+                  Thank you for your purchase. Your order has been confirmed and
+                  will be shipped soon.
+                </p>
 
-    <div className="bg-[#FAF8F3] border border-[#DED7C7] rounded-xl p-5 mt-8 w-full max-w-md">
-      <div className="flex justify-between py-2 border-b">
-        <span className="font-medium">Order Number</span>
-        <span>{orderNumber}</span>
-      </div>
+                <div className="bg-[#FAF8F3] border border-[#DED7C7] rounded-xl p-5 mt-8 w-full max-w-md">
+                  <div className="flex justify-between py-2 border-b">
+                    <span className="font-medium">Order Number</span>
+                    <span>{orderNumber}</span>
+                  </div>
 
-      <div className="flex justify-between py-2 border-b">
-        <span className="font-medium">Payment Method</span>
-        <span className="capitalize">{paymentMethod}</span>
-      </div>
+                  <div className="flex justify-between py-2 border-b">
+                    <span className="font-medium">Payment Method</span>
+                    <span className="capitalize">{paymentMethod}</span>
+                  </div>
 
-      <div className="flex justify-between py-2">
-        <span className="font-medium">Total Amount</span>
-        <span className="font-bold text-[#B23A2E]">
-          ₹ {total.toLocaleString("en-IN")}
-        </span>
-      </div>
-    </div>
+                  <div className="flex justify-between py-2">
+                    <span className="font-medium">Total Amount</span>
+                    <span className="font-bold text-[#B23A2E]">
+                      ₹ {total.toLocaleString("en-IN")}
+                    </span>
+                  </div>
+                </div>
 
-    <button
-      onClick={() => window.location.reload()}
-      className="mt-8 bg-[#1C1B1A] hover:bg-[#B23A2E] text-white px-8 py-3 rounded-xl font-semibold transition"
-    >
-      Continue Shopping
-    </button>
-  </div>
-)}
+                <button
+                  onClick={() => window.location.reload()}
+                  className="mt-8 bg-[#1C1B1A] hover:bg-[#B23A2E] text-white px-8 py-3 rounded-xl font-semibold transition"
+                >
+                  Continue Shopping
+                </button>
+              </div>
+            )}
 
             <button
               disabled={!isFormValid}
-              onClick={handleProceed}
+              onClick={() => {
+                handleProceed();
+                insertProduct.mutate({
+                  username: fromData.name,
+                  product_id: productdata.id,
+                  quantity: fromData.Quantity,
+                  product_name: productdata.name,
+                  product_price: productdata.price,
+                  catogary: productdata.category,
+                  image: productdata.image,
+                  address_line2: fromData.address,
+                  city: fromData.city,
+                  state: fromData.state,
+                  payment_method: paymentMethod,
+                  pin_code: fromData.pincode,
+                  email_Address: fromData.email,
+                  Phone_number: fromData.phoneNumber,
+                });
+              }}
               className="bg-[#1C1B1A] hover:bg-[#B23A2E] text-white font-semibold text-sm uppercase tracking-wide py-3.5 w-full rounded-xl mt-3 transition-colors"
             >
               {activeStep === 1 && "Continue to Payment"}
