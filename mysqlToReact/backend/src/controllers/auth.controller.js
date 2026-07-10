@@ -11,7 +11,7 @@ export default async function singIn(req, res) {
         
         const query = "INSERT INTO users(firstName,lastName,email,password)VALUES (?,?,?,?)";
         
-        console.log(firstName,lastName,email,password)
+        console.log(firstName,lastName,email,password);
         db.query(query, [firstName, lastName, email, hashedPassword], (err, result) => {
             console.log("inside callback");
             if (err) {
@@ -35,13 +35,17 @@ export default async function singIn(req, res) {
                 httpOnly: true,
                 sameSite: "lax",
                 secure: false,
-                maxAge: 24 * 60 * 60 * 1000
+                maxAge: 2 * 24 * 60 * 60 * 1000,
+                path: '/',
+                expires: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000)
             })
             res.cookie("refreshToken", refreshToken, {
                 httpOnly: true,
                 sameSite: "lax",
                 secure: false,
-                maxAge: 24 * 60 * 60 * 1000
+                maxAge: 7 * 24 * 60 * 60 * 1000,
+                path: '/',
+                expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
             });
             return res.status(201).json({
                 message: "Account created",data:result

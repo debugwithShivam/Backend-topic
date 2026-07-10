@@ -84,6 +84,7 @@ export default function AuthLogin() {
         },
         { withCredentials: true },
       );
+      localStorage.setItem("accessToken", user.data?.accessToken || "");
       navigate('/setting')
       setAccountDetail({
         firstName: "",

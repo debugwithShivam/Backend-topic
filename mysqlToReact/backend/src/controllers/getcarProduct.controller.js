@@ -1,10 +1,16 @@
 import { productOrder } from "../db/dataBase.js";
 
 function getCartProductdata(req, res) {
-    try {
-        const query = "SELECT * FROM CartOrders";
+    const userId = req.user?.id;
 
-        productOrder.query(query, (err, result) => {
+    if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    try {
+        const query = "SELECT * FROM CartOrders WHERE user_id = ?";
+
+        productOrder.query(query, [userId], (err, result) => {
             if (err) {
                 console.log("MYSQL ERROR:", err);
                 return res.status(500).json({ error: err });

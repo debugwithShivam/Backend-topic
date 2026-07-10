@@ -6,10 +6,15 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 async function getCartData() {
   try {
-    let response = await axios.get("http://localhost:4876/auth/getCartProduct");
+    const token = localStorage.getItem("accessToken");
+    let response = await axios.get("http://localhost:4876/auth/getCartProduct", {
+      withCredentials: true,
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    });
     return response.data.data;
   } catch (error) {
     console.error(error);
+    return [];
   }
 }
 

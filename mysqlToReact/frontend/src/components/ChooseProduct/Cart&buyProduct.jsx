@@ -12,6 +12,8 @@ import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
+const getStoredToken = () => localStorage.getItem("accessToken");
+
 export default function CartbuyProduct({ qty }) {
   console.log(qty)
   let getOrderData = JSON.parse(localStorage.getItem("chooseProduct"));
@@ -20,6 +22,7 @@ export default function CartbuyProduct({ qty }) {
 
   async function orderProduct(params) {
     try {
+      const token = getStoredToken();
       let sendResonse = await axios.post(
         "http://localhost:4876/auth/cartProduct",
         {
@@ -31,7 +34,10 @@ export default function CartbuyProduct({ qty }) {
           image: getOrderData.image,
           category: getOrderData.category,
         },
-        { withCredentials: true },
+        {
+          withCredentials: true,
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        },
       );
       queryClient.invalidateQueries({
         queryKey:['cartdata']
