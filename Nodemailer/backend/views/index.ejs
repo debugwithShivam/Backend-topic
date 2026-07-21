@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background: #f0f2f5;
+    }
+
+    /* Navbar */
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #1877f2;
+        color: white;
+        padding: 15px 30px;
+        position: sticky;
+        top: 0;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .search input {
+        width: 300px;
+        padding: 10px;
+        border: none;
+        border-radius: 20px;
+    }
+
+    .profile img {
+        border-radius: 50%;
+    }
+
+    /* Layout */
+
+    .container {
+        display: grid;
+        grid-template-columns: 250px 1fr 250px;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    /* Sidebar */
+
+    .left-sidebar,
+    .right-sidebar {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        height: fit-content;
+    }
+
+    .left-sidebar ul {
+        list-style: none;
+    }
+
+    .left-sidebar li {
+        padding: 15px;
+        cursor: pointer;
+        border-radius: 8px;
+    }
+
+    .left-sidebar li:hover {
+        background: #eee;
+    }
+
+    /* Feed */
+
+    .create-post {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .create-post textarea {
+        width: 100%;
+        height: 80px;
+        resize: none;
+        padding: 10px;
+    }
+
+    .create-post button {
+        margin-top: 10px;
+        background: #1877f2;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .post {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .post-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .post-header img {
+        border-radius: 50%;
+    }
+
+    .post-image {
+        width: 100%;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: space-around;
+        padding-top: 15px;
+        color: #555;
+        font-weight: bold;
+    }
+
+    /* Right Cards */
+
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .card h3 {
+        margin-bottom: 10px;
+    }
+
+    .card p {
+        padding: 8px 0;
+    }
+
+    /* Responsive */
+
+    @media(max-width:900px) {
+
+        .container {
+            grid-template-columns: 1fr;
+        }
+
+        .left-sidebar,
+        .right-sidebar {
+            display: none;
+        }
+
+        .search input {
+            width: 150px;
+        }
+
+    }
+</style>
+
+<body>
+
+    <!-- Navbar -->
+    <header>
+        <div class="logo">SocialBook</div>
+
+        <div class="search">
+            <input type="text" placeholder="Search...">
+        </div>
+
+        <div class="profile">
+            <img src="https://via.placeholder.com/40" alt="">
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- Left Sidebar -->
+        <aside class="left-sidebar">
+            <ul>
+                <li>🏠 Home</li>
+                <li>👤 Profile</li>
+                <li>💬 Messages</li>
+                <li>🔔 Notifications</li>
+                <li>⚙ Settings</li>
+            </ul>
+        </aside>
+
+        <!-- Feed -->
+        <main>
+
+            <!-- Create Post -->
+            <div class="create-post">
+                <textarea placeholder="What's on your mind?"></textarea>
+                <button>Post</button>
+            </div>
+
+            <!-- Post -->
+            <div class="post">
+                <div class="post-header">
+                    <img src="https://via.placeholder.com/50">
+                    <div>
+                        <h3>John Doe</h3>
+                        <small>2 hours ago</small>
+                    </div>
+                </div>
+
+                <p>
+                    Hello everyone! This is my first post on SocialBook.
+                </p>
+
+                <img class="post-image" src="https://picsum.photos/600/300">
+
+                <div class="actions">
+                    ❤️ Like
+                    💬 Comment
+                    ↗ Share
+                </div>
+            </div>
+
+            <!-- Another Post -->
+            <div class="post">
+                <div class="post-header">
+                    <img src="https://via.placeholder.com/50">
+                    <div>
+                        <h3>Emma</h3>
+                        <small>Yesterday</small>
+                    </div>
+                </div>
+
+                <p>
+                    Beautiful sunset today 🌅
+                </p>
+
+                <img class="post-image" src="https://picsum.photos/600/301">
+
+                <div class="actions">
+                    ❤️ Like
+                    💬 Comment
+                    ↗ Share
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Right Sidebar -->
+        <aside class="right-sidebar">
+
+            <div class="card">
+                <h3>Trending</h3>
+                <p>#HTML</p>
+                <p>#CSS</p>
+                <p>#Programming</p>
+                <p>#WebDevelopment</p>
+            </div>
+
+            <div class="card">
+                <h3>Contacts</h3>
+                <p>🟢 Alice</p>
+                <p>🟢 Bob</p>
+                <p>🟢 David</p>
+            </div>
+
+        </aside>
+
+    </div>
+
+</body>
+
+</html>
