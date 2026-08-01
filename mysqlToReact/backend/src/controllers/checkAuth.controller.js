@@ -13,7 +13,6 @@ export default async function checkAuth(req,res) {
               return res.status(403).json({ authenticated: false });
         }
 
-        console.log(user)
         let query = 'SELECT id, firstName, lastName ,email FROM  users WHERE id = ?'
         db.query(query,[user.id],(err,result)=>{
             if (err || result.length === 0) {
@@ -22,6 +21,5 @@ export default async function checkAuth(req,res) {
             console.log(result[0])
             res.json({ authenticated: true, user: result[0] });
         })
-    })
-
-}
+    });
+};

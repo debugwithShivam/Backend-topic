@@ -3,21 +3,6 @@ let app = express()
 
 
 
-app.use((req, res, next) => {
-    console.log('middleware 1 working')
-        next()
-});
-
-app.use((req, res, next) => {
-    console.log('middleware 2 working')
-        next()
-});
-
-
-app.use(express.static('./public'))
-
-app.set("view engine","ejs")
-
 app.get('/', (req, res) => {
     res.render('index',{age:12})
 })
