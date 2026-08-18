@@ -1,7 +1,10 @@
-const express = require('express')
+import express from 'express'
 let app = express()
 
 
+app.set('view engine', 'ejs')
+
+app.use(express.static('views'))
 
 app.get('/', (req, res) => {
     res.render('index',{age:12})

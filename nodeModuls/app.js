@@ -17,7 +17,7 @@ dotenv.config()
 // let server = http.createServer(pathModulsFunction)
 // let server = http.createServer(queryParms)
 // let server = http.createServer(processFun)
-// let server = http.createServer(processStream)
+let server = http.createServer(processStream)
 // let server = http.createServer(stream)
 
 // const server = net.createServer((socket) => {
@@ -38,28 +38,28 @@ dotenv.config()
 //   });
 // });
 
-const server = net.createServer((socket) => {
-  console.log("Client connected");
+// const server = net.createServer((socket) => {
+//   console.log("Client connected");
 
-  socket.on('data', (data) => {
-    const msg = data.toString().trim();
-    console.log("Received:", msg);
+//   socket.on('data', (data) => {
+//     const msg = data.toString().trim();
+//     console.log("Received:", msg);
 
-    socket.write(
-      "HTTP/1.1 200 OK\r\n" +
-      "Content-Type: text/plain\r\n" +
-      "Content-Length: 12\r\n" +
-      "\r\n" +
-      "Hello World!"
-    );
-    socket.end();
-  });
+//     socket.write(
+//       "HTTP/1.1 200 OK\r\n" +
+//       "Content-Type: text/plain\r\n" +
+//       "Content-Length: 12\r\n" +
+//       "\r\n" +
+//       "Hello World!"
+//     );
+//     socket.end();
+//   });
 
-  socket.on('end', () => {
-    console.log("Client disconnected");
-  });
-});
+//   socket.on('end', () => {
+//     console.log("Client disconnected");
+//   });
+// });
 
-server.listen(process.env.PORT, () => {
-  console.log(`Server running at http://localhost:${process.env.PORT}`)
+server.listen(3000, () => {
+  console.log(`Server running at http://localhost:${3000}`)
 })

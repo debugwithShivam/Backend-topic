@@ -9,6 +9,7 @@ import path from 'path'
 let app = express();
 
 app.use("/product",express.static('src/product'))
+
 app.use(cors({
    origin: "http://localhost:5173",
    credentials: true
