@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono&family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+* {
+    box-sizing: border-box
+}
+
+body {
+    margin: 0;
+    background: #f7f5ef;
+    color: #202321;
+    font-family: 'Plus Jakarta Sans', sans-serif
+}
+
+header {
+    height: 72px;
+    background: #1f3a32;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 max(5vw, 24px);
+    font-size: .85rem
+}
+
+.brand {
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    text-decoration: none
+}
+
+main {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 24px 80px
+}
+
+.hero {
+    padding: 88px 0 55px
+}
+
+.hero>p,
+.add-product>div>p {
+    font: 12px 'DM Mono', monospace;
+    letter-spacing: .12em;
+    color: #b85c38
+}
+
+.hero h1 {
+    font: 700 clamp(3rem, 8vw, 6.3rem)/.95 'Playfair Displafy', serif;
+    margin: 14px 0 20px
+}
+
+.hero .subtext {
+    max-width: 480px;
+    color: #5b625e;
+    line-height: 1.6;
+    letter-spacing: 0
+}
+
+.toolbar {
+    display: flex;
+    gap: 12px;
+    border-top: 1px solid #d9d6cc;
+    padding-top: 22px
+}
+
+.toolbar input,
+.toolbar select,
+input,
+textarea,
+form select {
+    font: inherit;
+    width: 100%;
+    border: 1px solid #c8c5ba;
+    border-radius: 4px;
+    background: #fff;
+    padding: 13px
+}
+
+.toolbar input {
+    flex: 1
+}
+
+.toolbar select {
+    max-width: 240px
+}
+
+.count {
+    color: #5b625e;
+    font-size: .9rem;
+    margin: 24px 0 16px
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #e1ded5;
+    border-radius: 6px;
+    overflow: hidden
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    background: #e6e2d9
+}
+
+.card div {
+    padding: 17px
+}
+
+.card span {
+    font: 11px 'DM Mono', monospace;
+    text-transform: uppercase;
+    color: #b85c38
+}
+
+.card h3 {
+    font-size: 1rem;
+    margin: 8px 0
+}
+
+.card p {
+    font-size: .82rem;
+    color: #5b625e;
+    line-height: 1.5;
+    height: 39px;
+    margin: 0 0 14px
+}
+
+.card strong {
+    font-size: 1rem
+}
+
+.add-product {
+    margin-top: 86px;
+    border-top: 1px solid #d9d6cc;
+    padding-top: 54px;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 80px
+}
+
+.add-product h2 {
+    font: 700 2.4rem 'Playfair Display', serif;
+    margin: 10px 0
+}
+
+.add-product>div>p:last-child {
+    color: #5b625e;
+    font: inherit;
+    line-height: 1.6
+}
+
+.add-product form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px
+}
+
+label {
+    font-size: .8rem;
+    font-weight: 600;
+    display: grid;
+    gap: 7px
+}
+
+textarea {
+    min-height: 90px;
+    resize: vertical
+}
+
+label:has(textarea),
+label:has(input[type=url]) {
+    grid-column: span 2
+}
+
+button {
+    grid-column: span 2;
+    border: 0;
+    border-radius: 4px;
+    padding: 14px;
+    background: #1f3a32;
+    color: #fff;
+    font: 600 1rem inherit;
+    cursor: pointer
+}
+
+button:hover {
+    background: #295447
+}
+
+button:disabled {
+    cursor: wait;
+    opacity: .7
+}
+
+#message {
+    grid-column: span 2;
+    margin: 0;
+    font-size: .85rem;
+    color: #356652
+}
+
+.error {
+    color: #a73925
+}
+
+option{
+    color: #1f3a32;
+}
+
+@media(max-width:800px) {
+    .products {
+        grid-template-columns: repeat(2, 1fr)
+    }
+
+    .add-product {
+        grid-template-columns: 1fr;
+        gap: 24px
+    }
+}
+
+@media(max-width:500px) {
+    header span {
+        display: none
+    }
+
+    .hero {
+        padding-top: 55px
+    }
+
+    .toolbar,
+    .add-product form {
+        display: block
+    }
+
+    .toolbar select,
+    label,
+    button {
+        margin-top: 12px
+    }
+
+    .toolbar select {
+        max-width: none
+    }
+
+    .products {
+        grid-template-columns: 1fr
+    }
+
+    .add-product {
+        margin-top: 50px
+    }
+}
